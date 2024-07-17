@@ -8,16 +8,17 @@ import android.view.View;
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import javax.xml.transform.Result;
-
 public class MainActivity extends AppCompatActivity {
     private double bmi;
+    private ActivityResultLauncher<Intent> intentActivityResultLauncher;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,19 +31,19 @@ public class MainActivity extends AppCompatActivity {
         });
         intentActivityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<Result>() {
+                new ActivityResultCallback<ActivityResult>() {
                     @Override
-                    public void onActivityResult(ActivityResult o) {
-                    if(result.getDate()!=null&&result.getResultCode()== Activity.RESULT_OK))
-
-
+                    public void onActivityResult(ActivityResult result) {
+                        if (result != null && result.getResultCode() == Activity.RESULT_OK) {
+                            bmi = result.getData().getDoubleExtra("BMI", -1);
+                        }
                     }
                 }
-        )
+        );
     }
-    public void GotoBMIcalculate(View view)
-    {
-        Intent intent = new Intent(this, CalBMIactivity.class);
 
+    public void GotoBMIcalculate(View view) {
+        Intent intent = new Intent(this, CalBMIactivity.class);
+        intentActivityResultLauncher.launch(intent);
     }
 }
