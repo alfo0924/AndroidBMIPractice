@@ -26,20 +26,18 @@ public class CalBMIactivity extends AppCompatActivity {
         });
     }
 
-    public void CalBMI(View view)
-    {
+    public void CalBMI(View view) {
         EditText etwt = findViewById(R.id.etwt);
         EditText etht = findViewById(R.id.etht);
 
-        double w =Double.parseDouble(etwt.getText().toString());
-        double h =Double.parseDouble(etht.getText().toString());
-        double bmi = w/(h*h);
+        double w = Double.parseDouble(etwt.getText().toString());
+        double h = Double.parseDouble(etht.getText().toString());
+        h = h / 100; // Convert height from cm to m
+        double bmi = w / (h * h);
 
         Intent intent = new Intent();
-        intent.putExtra("BMI",bmi);
-        setResult(Activity.RESULT_OK,intent);
+        intent.putExtra("BMI", bmi);
+        setResult(Activity.RESULT_OK, intent);
         finish();
-
     }
-
 }
