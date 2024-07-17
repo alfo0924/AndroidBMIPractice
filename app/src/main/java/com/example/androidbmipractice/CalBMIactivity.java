@@ -1,5 +1,6 @@
 package com.example.androidbmipractice;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -36,7 +37,8 @@ public class CalBMIactivity extends AppCompatActivity {
 
         Intent intent = new Intent();
         intent.putExtra("BMI",bmi);
-
+        setResult(Activity.RESULT_OK,intent);
+        finish();
 
     }
 
